@@ -17,9 +17,9 @@ function App(){
 
 
   return(
-    <div>
+    <div className="bg-amber-100 main-h-screen">
       
-      <div className="h-[60vh] md:h-[80vh] bg-amber-100 overflow-scroll">
+      <div className="h-[60vh] md:h-[80vh] overflow-scroll">
         {todoList.map((taskItem, index)=>{
           const {task, priority} = taskItem;
           return (
