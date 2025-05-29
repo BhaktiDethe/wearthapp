@@ -1,18 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TodoCard from "./TodoCard";
+
 
 function App(){
   const [todoItem, setTodoItem] = useState({
     task: "",
     priority: "",
   });
-  const [todoList, setTodoList] = useState([
-    {
-  task: "task 1",
-  priority: "Hight",
-},
+  const [todoList, setTodoList] = useState([]);
 
-]);
+    useEffect(() =>{
+      if(todoList.length == 0) return;
+     
+      localStorage.setItem("todoList", JSON.stringify(todoList));
+          }, {todoList});
 
 
 
