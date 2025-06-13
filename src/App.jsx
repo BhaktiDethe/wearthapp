@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import TodoCard from "./TodoCard";
+import toast, {Toaster} from 'react-hot-toast';
 
 
 function App(){
@@ -8,6 +9,9 @@ function App(){
     priority: "",
   });
   const [todoList, setTodoList] = useState([]);
+  const[selectedTab, setSelectedTab] = useState("All");
+
+  // save list to localstorage 0n every change
 
     useEffect(() =>{
       if(todoList.length == 0) return;
@@ -15,16 +19,60 @@ function App(){
       localStorage.setItem("todoList", JSON.stringify(todoList));
           }, {todoList});
 
+          //load list from localstorage on first render
+
+  useEffect(() =>{
+    const listFromlS = JSON.parse(localStorage.getItem("todolist") || "[]");
+    setTodoList(listFromlS)
+  },[]);
 
 
-  return(
-    <div className="bg-amber-100 main-h-screen">
+  const onDelete = (index) => {
+        const listAfterDeletion = todoList.filter((_, i) => i!= index);
+        setTodoList(listAfterDeletion);
+        toast.success("task Deleted successfully")
+  };
+
+ return(
+  <div className="bg-amber-100 main-h-screen">
+  <div className="flex justify-around border-b-2 border-slate-400 pt-4">
+    {
+      ["All", "High", "Medium", "Low"].map((tab, i)=>{
+        return( 
+        <span 
+        className={` block w-[250px] text-xl text-center rounded-tl-lg rounded-tr-lg py-1
+          cursor-pointer ${
+         tab == selectedTab ? "bg-pink-400 text-white" : "bg-white"
+         }`} 
+         key={i}
+         onClick={() => setSelectedTab(tab)}
+        >
+          {tab}
+          </span>
+        );
+
+      })}
+    
+  </div>
+
       
       <div className="h-[60vh] md:h-[80vh] overflow-scroll">
         {todoList.map((taskItem, index)=>{
           const {task, priority} = taskItem;
+
+        if(selectedTab != "All" && priority != selectedTab){
+          return null;
+        }
+
+
           return (
-          <TodoCard index={index} task={task} priority={priority} key={index}/>
+          <TodoCard 
+          task={task}
+          priority={priority}
+          key={index}
+          index={index}
+          onDelete={onDelete}/>
+
           );
         })}
       </div>
@@ -53,27 +101,38 @@ function App(){
     value={todoItem.priority}
     >
       
-    <option value={""}>select priority</option>
+      <option value={"All"}>All</option>
     <option value={"High"}>High</option>
     <option value={"Medium"}>Medium</option>
     <option value={"Low"}>Low</option>
 
     </select>
       <button 
-      className="text-xl bg-yellow-500 px-10 py-2 rounded-md ml-15 mt-8 md:mt-0 w-[150px]
+      className="text-xl bg-yellow-500 px-10 py-2 rounded-md ml-15 mt-8 md:mt-0 w-[110px]
       cursor-pointer"
    onClick={()=>{
+
+    if(!todoItem.task){
+      toast.error('please enter task');
+      return;
+    }
+    if(!todoItem.priority){
+      toast.error('please enter priority');
+      return;
+    }
     setTodoList([todoItem, ...todoList]);
     setTodoItem({
       task: "",
       priority: "",
     });
+    toast.success('task added successfully');
    }}
 
       >
         Add
         </button>
     </div>
+    <Toaster />
     </div>
   );
 }

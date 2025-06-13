@@ -10,18 +10,31 @@ const BADGE_PRIORITY_CLASSES = {
   Low: "text-red-500 border-red-500",
 };
 
-function TodoCard({task, priority}){
+function TodoCard({task, priority,index, onDelete}){
     return(
         <div 
     
-           className={`bg-white p-5 m-5 shadow-lg rounded-md border-1  border-gray-200 relative  
+           className={`bg-white p-5 m-5 shadow-lg rounded-md border-1  border-gray-200  relative  
             ${TASK_PRIORITY_CLASES[priority]}`}
            >
-            <h1>{task}</h1>
-            <span className={` block w-[100px] text-center border-1 text-center rounded-full absolute top-9
-          right-9 ${BADGE_PRIORITY_CLASSES[priority]}`} >
+            
+
+            <span className={`block w-[100px] border-1  text-center rounded-full
+           ${BADGE_PRIORITY_CLASSES[priority]}`} >
               {priority}
               </span>
+              <h1 className="mt-2 text-xl">{task}</h1>
+
+            <button onClick={()=>{
+             onDelete(index);
+
+            }}
+            className="bg-red-500 text-white text-xs px-5 py-1 rounded-full absolute  top-2 right-2 cursor-pointer"
+                >
+              Delete</button>
+
+
+          
             </div>
     );
 }
