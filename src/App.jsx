@@ -40,7 +40,7 @@ function App(){
       ["All", "High", "Medium", "Low"].map((tab, i)=>{
         return( 
         <span 
-        className={` block w-[250px] text-xl text-center rounded-tl-lg rounded-tr-lg py-1
+        className={` block w-[100px] md:-[250px] text-lg md:text-xl text-center rounded-tl-lg rounded-tr-lg py-1
           cursor-pointer ${
          tab == selectedTab ? "bg-pink-400 text-white" : "bg-white"
          }`} 
