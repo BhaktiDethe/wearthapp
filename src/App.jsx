@@ -34,7 +34,7 @@ function App(){
   };
 
  return(
-  <div className="bg-amber-100 main-h-screen">
+  <div className="bg-orange-100 main-h-screen">
   <div className="flex justify-around border-b-2 border-slate-400 pt-4">
     {
       ["All", "High", "Medium", "Low"].map((tab, i)=>{
@@ -120,6 +120,9 @@ function App(){
       toast.error('please enter priority');
       return;
     }
+
+    setSelectedTab("All");
+
     setTodoList([todoItem, ...todoList]);
     setTodoItem({
       task: "",

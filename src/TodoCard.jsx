@@ -14,7 +14,7 @@ function TodoCard({task, priority,index, onDelete}){
     return(
         <div 
     
-           className={`bg-white p-5 m-5 shadow-lg rounded-md border-1  border-gray-200  relative  
+           className={`bg-pink p-5 m-5 shadow-lg rounded-md border-1  border-gray-200  relative  
             ${TASK_PRIORITY_CLASES[priority]}`}
            >
             
@@ -29,7 +29,7 @@ function TodoCard({task, priority,index, onDelete}){
              onDelete(index);
 
             }}
-            className="bg-red-500 text-white text-xs px-5 py-1 rounded-full absolute  top-2 right-2 cursor-pointer"
+            className="bg-red-700 text-white text-xs px-5 py-1 rounded-full absolute  top-2 right-2 cursor-pointer"
                 >
               Delete</button>
 
